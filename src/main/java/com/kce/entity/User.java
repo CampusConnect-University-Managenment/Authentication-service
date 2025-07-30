@@ -10,7 +10,7 @@ import jakarta.persistence.Table;
 @Table(name="user_entity")
 public class User {
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
     private String email;
     private String password;
