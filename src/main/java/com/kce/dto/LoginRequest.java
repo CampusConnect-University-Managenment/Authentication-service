@@ -4,7 +4,7 @@ public class LoginRequest {
 
         private String username;
         private String password;
-
+//private String uniqueId;
         public LoginRequest() {}
 
         public String getUsername() {
@@ -22,4 +22,10 @@ public class LoginRequest {
         public void setPassword(String password) {
             this.password = password;
         }
+//        public String getUniqueId(){
+//            return uniqueId;
+//        }
+//        public void setUniqueId(String uniqueId){
+//            this.uniqueId=uniqueId;
+//        }
 }

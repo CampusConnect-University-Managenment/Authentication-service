@@ -17,14 +17,26 @@ public class RegistrationController {
     @Autowired
     private PasswordEncoder passwordEncoder; // Correct injection
 
-    @PostMapping("register")
-    public String registerUser(@RequestBody RegisterRequest request) {
+//    @PostMapping("register")
+//    public String registerUser(@RequestBody RegisterRequest request) {
+//        User user = new User();
+//        user.setEmail(request.getEmail());
+//        user.setPassword(passwordEncoder.encode(request.getPassword()));
+//        user.setRole(request.getRole());
+//
+//        userRepository.save(user);
+//        return "User registered successfully!";
+//    }
+    @PostMapping("/register-student")
+    public String registerStudent(@RequestBody RegisterRequest request) {
         User user = new User();
         user.setEmail(request.getEmail());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
-        user.setRole(request.getRole());
+        user.setRole("student"); // Fixed role
+        user.setUnique_id(request.getUniqueId());
 
         userRepository.save(user);
-        return "User registered successfully!";
+        return "Student registered successfully!";
     }
+
 }

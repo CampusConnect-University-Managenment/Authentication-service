@@ -72,6 +72,8 @@
 			<scope>runtime</scope>
 		</dependency>
 
+
+
 		<!-- JJWT with Jackson (for JSON serialization/deserialization) -->
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
