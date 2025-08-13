@@ -1,6 +1,6 @@
 package com.kce.config;
 
-import com.kce.service.UserDetailsServiceImpl;
+import com.kce.service.impl.UserDetailsServiceImpl;
 import com.kce.util.JWTUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

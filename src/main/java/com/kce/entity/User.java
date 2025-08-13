@@ -15,6 +15,7 @@ public class User {
     private String email;
     private String password;
     private String role;
+    private String uniqueId;
     public int getId() {
         return id;
     }
@@ -40,5 +41,14 @@ public class User {
         this.role = role;
     }
 
+    public String getUnique_id() {
+        return uniqueId;
+    }
+    public void setUnique_id(String uniqueId) {
+        this.uniqueId = uniqueId;
+    }
+    public String getUniqueId(){
+        return uniqueId;
+    }
 }
 
