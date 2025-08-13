@@ -3,15 +3,21 @@ package com.kce.controller;
 import com.kce.dto.LoginRequest;
 import com.kce.dto.LoginResponse;
 import com.kce.repository.UserRepository;
+import com.kce.service.CustomUserDetails;
 import com.kce.util.JWTUtil;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import com.kce.entity.User;
+
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api/auth")
 @CrossOrigin(origins = "http://localhost:3000")
@@ -33,17 +39,36 @@ private UserRepository userRepository;
                 )
         );
 
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        String token = jwtUtil.generateToken(userDetails.getUsername(),
-                userDetails.getAuthorities().iterator().next().getAuthority());
-        String role = jwtUtil.extractRole(token);
-        // Fetch unique_id directly from UserAuth table
-        String uniqueId = userRepository
-                .findByEmail(userDetails.getUsername())
-                .map(User::getUniqueId) // assuming getter is getUniqueId()
-                .orElse(null);
+        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 
-        return new LoginResponse(token, role, userDetails.getUsername(), uniqueId); // <-- send email
+        String token = jwtUtil.generateToken(
+                userDetails.getUsername(),
+                userDetails.getAuthorities().iterator().next().getAuthority()
+        );
+
+        return new LoginResponse(
+                token,
+                userDetails.getAuthorities().iterator().next().getAuthority(),
+                userDetails.getUsername(),
+                userDetails.getUniqueId() // ✅ this now comes from CustomUserDetails
+        );
+    }
+    @Autowired
+    PasswordEncoder passwordEncoder;
+    @PutMapping("/update-password/{uniqueId}")
+    public ResponseEntity<String> updatePassword(
+            @PathVariable String uniqueId,
+            @RequestBody Map<String, String> request) {
+
+        String newPassword = request.get("newPassword");
+
+        User user = userRepository.findByUniqueId(uniqueId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        user.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.save(user);
+
+        return ResponseEntity.ok("Password updated in Auth Service");
     }
 
 }

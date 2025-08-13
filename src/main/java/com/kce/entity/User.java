@@ -15,7 +15,7 @@ public class User {
     private String email;
     private String password;
     private String role;
-    private String unique_id;
+    private String uniqueId;
     public int getId() {
         return id;
     }
@@ -42,13 +42,13 @@ public class User {
     }
 
     public String getUnique_id() {
-        return unique_id;
+        return uniqueId;
     }
-    public void setUnique_id(String unique_id) {
-        this.unique_id = unique_id;
+    public void setUnique_id(String uniqueId) {
+        this.uniqueId = uniqueId;
     }
     public String getUniqueId(){
-        return unique_id;
+        return uniqueId;
     }
 }
 

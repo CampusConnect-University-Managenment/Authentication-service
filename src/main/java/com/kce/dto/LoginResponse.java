@@ -5,12 +5,12 @@ public class LoginResponse {
     private String token;
     private String role;
    private String email;
-   private String unique_id;
-    public LoginResponse(String token, String role,String email,String unique_id) {
+   private String uniqueId;
+    public LoginResponse(String token, String role,String email,String uniqueId) {
         this.token = token;
         this.role = role;
         this.email=email;
-        this.unique_id=unique_id;
+        this.uniqueId=uniqueId;
     }
 
     public String getToken() {
@@ -21,7 +21,7 @@ public class LoginResponse {
         return role;
     }
     public String getEmail() { return email; }
-    public String getUnique_id(){
-        return unique_id;
+    public String getUniqueId(){
+        return uniqueId;
     }
 }
