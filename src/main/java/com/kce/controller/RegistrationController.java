@@ -4,6 +4,7 @@ import com.kce.dto.RegisterRequest;
 import com.kce.entity.User;
 import com.kce.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +28,7 @@ public class RegistrationController {
 //        userRepository.save(user);
 //        return "User registered successfully!";
 //    }
-@PostMapping("/register-student")
+@PostMapping("/register-user")
 public String registerStudent(@RequestBody RegisterRequest request) {
     User user = new User();
     user.setEmail(request.getEmail());
@@ -47,6 +48,14 @@ public String registerStudent(@RequestBody RegisterRequest request) {
     userRepository.save(user);
     return "User registered successfully as " + user.getRole() + "!";
 }
-
+    @DeleteMapping("/delete-user/{uniqueId}")
+    public ResponseEntity<String> deleteUser(@PathVariable String uniqueId) {
+        return userRepository.findByUniqueId(uniqueId)
+                .map(user -> {
+                    userRepository.delete(user);
+                    return ResponseEntity.ok("User deleted successfully from Auth Service");
+                })
+                .orElse(ResponseEntity.status(404).body("User not found in Auth Service"));
+    }
 
 }
