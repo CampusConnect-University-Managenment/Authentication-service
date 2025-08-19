@@ -68,8 +68,9 @@ private UserRepository userRepository;
         user.setPassword(passwordEncoder.encode(newPassword));
         userRepository.save(user);
 
-        return ResponseEntity.ok("Password updated in Auth Service");
+        return ResponseEntity.ok("Password Changed Successfully");
     }
+
 
 }
 
